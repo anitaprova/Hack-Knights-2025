@@ -55,19 +55,22 @@ function Dictionary() {
 
   return (
     <div className="flex flex-col gap-y-20 ml-50 mr-50 mb-25 mt-25 font-sans">
-      <div className="flex gap-x-5">
+      <div className="flex">
         <input
           type="text"
           onChange={handleInput}
           onKeyDown={handleKeyPress}
           placeholder="Search a medical term here..."
-          className="bg-green w-full rounded-lg p-3 border border border-darkgreen"
+          className="bg-white w-full text-xl rounded-l-lg p-5 border border border-darkgreen"
         />
-        <FaSearch
-          size={40}
-          className="hover:cursor-pointer"
-          onClick={handleSubmit}
-        />
+        <div className="bg-darkgreen rounded-r-lg border border p-5 border-darkgreen">
+          <FaSearch
+            size={40}
+            color="white"
+            className="hover:cursor-pointer"
+            onClick={handleSubmit}
+          />
+        </div>
       </div>
 
       {results ? (
