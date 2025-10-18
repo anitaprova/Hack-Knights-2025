@@ -1,12 +1,36 @@
+import { useNavigate } from "react-router-dom";
+
 function Navbar() {
+  const navigate = useNavigate();
+
   return (
-    <>
-      <nav className="bg-fushia text-xl flex text-white justify-around p-3 rounded-full ml-25 mr-25 mt-5">
-        <div className="flex items-center gap-2 hover:cursor-pointer hover:animate-bounce">
-          <span>Home</span>
-        </div>
-      </nav>
-    </>
+    <nav className="bg-emerald-100 flex flex-row font-sans text-xl justify-around p-3 rounded-full mx-75 mt-5">
+      <div
+        className="flex items-center gap-2 hover:cursor-pointer"
+        onClick={() => navigate(`/`)}
+      >
+        {/* add icons */}
+        <span>Home</span>
+      </div>
+      <div
+        className="flex items-center gap-2 hover:cursor-pointer"
+        onClick={() => navigate(`/Records`)}
+      >
+        <span>Records</span>
+      </div>
+      <div
+        className="flex items-center gap-2 hover:cursor-pointer"
+        onClick={() => navigate(`/Dictionary`)}
+      >
+        <span>Dictionary</span>
+      </div>
+      <div
+        className="flex items-center gap-2 hover:cursor-pointer"
+        onClick={() => navigate(`/Account`)}
+      >
+        <span>Account</span>
+      </div>
+    </nav>
   );
 }
 
