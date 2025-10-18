@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import Logo from "../assets/logo.svg";
 import LoginImage from "../assets/login-image.png";
 import { supabase } from "../../utils/supabaseClient";
+import * as React from "react";
 
 interface Record {
   name: string;
@@ -14,6 +15,9 @@ interface Record {
 
 function Login() {
   const [records, setRecords] = useState<Record[]>([]);
+  const [email, setEmail] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -22,6 +26,20 @@ function Login() {
       }
     })
   }, [navigate]);
+  const handleEmailLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    
+    if (email && password) {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+      if (error) {
+        setError(error.message);
+      }
+    }
+  }
   const handleGoogleLogin = async () => {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
@@ -63,17 +81,42 @@ function Login() {
               <span className="text-darkgreen">Speak</span>
             </h1>
           </div>
-          <h2 className="text-l text-center mt-5 text-darkgreen">Record, translate, and understand medical talk</h2>
+          <h2 className="text-l text-center mt-5 text-gray-500">Record, translate, and understand medical talk</h2>
         </section>
-        <section className="flex justify-center mt-10">
+        <section className="flex flex-col justify-center mt-10 px-30">
+          <form className="flex flex-col" onSubmit={handleEmailLogin}>
+            <label htmlFor="email">
+              Email
+            </label>
+            <input type="email" id="email" required onChange={(e) => setEmail(e.target.value)} className="bg-green/[0.7] p-2 rounded-sm mb-5" />
+
+            <label htmlFor="password">
+              Password
+            </label>
+            <input type="password" id="password" required onChange={(e) => setPassword(e.target.value)} className="bg-green/[0.7] p-2 rounded-sm mb-5" />
+            <button className="bg-darkgreen p-3 text-xl text-lightgreen rounded-sm cursor-pointer hover:brightness-[0.8]">
+              Login
+            </button>
+            {error && <p className="text-red-300 mt-2">{error}</p>}
+          </form>
+          <div className="relative flex items-center justify-center w-full my-10">
+            <hr className="w-full h-px bg-gray-400 border-0" />
+            <span className="absolute px-3 font-medium text-gray-400 bg-lightgreen">
+              or
+            </span>
+          </div>
           <button
             onClick={handleGoogleLogin}
-            className="bg-white flex text-xl justify-around items-center gap-7 py-3 px-5 border-darkgreen border-1 border-solid rounded-sm hover:cursor-pointer hover:bg-green"
+            className="bg-white flex text-xl justify-center items-center gap-5 py-3 px-5 border-darkgreen border-1 border-solid rounded-sm hover:cursor-pointer hover:bg-green"
           >
             <FcGoogle />
-            <span>Sign in with Google</span>
+            <span>Login with Google</span>
           </button>
         </section>
+        <p className="flex justify-center gap-2 mt-40 text-gray-500">
+          Not a member?
+          <a href="/Signup" className="text-darkgreen underline hover:text-darkblue">Sign up here</a>
+        </p>
         {/* <button onClick={testSupabase}>
           Insert into supabase
         </button>
