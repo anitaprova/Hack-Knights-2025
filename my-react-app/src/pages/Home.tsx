@@ -51,14 +51,13 @@ function Home() {
   console.log(listening);
 
   return (
-    <div className="grid grid-cols-2 grid-rows-2 gap-x-20 ml-50 mr-50 mb-25 font-sans">
+    <div className="grid grid-cols-2 gap-x-20 ml-50 mr-50 mt-25 font-sans">
       <div className="bg-lightblue rounded-xl flex flex-col text-xl mt-20 w-full shadow-[0px_4px_15.8px_-1px_rgba(9,_40,_22,_0.25)]">
         <h1 className="flex text-xl gap-x-2 mb-2 p-8 justify-center">
           <p className="text-center text-[36px] font-bold">Audio Recording</p>
         </h1>
 
         <div className="p-3 flex-1">
-          {/* <p>Status: {listening ? "On" : "Off"}</p> */}
           {listening ? (
             <div className="flex items-center justify-center">
               <div className="flex flex-col gap-y-5 items-center">
@@ -101,7 +100,7 @@ function Home() {
         </div>
 
         <div className="p-3 w-full h-full mb-5">
-          <p className="w-full h-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl p-8 overflow-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <p className="w-full h-full bg-gray-50 border border-blue text-gray-900 text-sm rounded-xl p-8 overflow-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {transcript}
           </p>
         </div>

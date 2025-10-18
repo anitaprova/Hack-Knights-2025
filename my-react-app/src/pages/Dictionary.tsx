@@ -73,31 +73,35 @@ function Dictionary() {
         </div>
       </div>
 
-      {results && (
-        results.map((result) => (
-          result != "" && (
-            <div className="bg-gray-200 p-5 rounded-lg shadow-[0px_4px_15.8px_-1px_rgba(9,_40,_22,_0.25)]">
-              <p className="text-[36px] font-bold">
-                {result?.meta?.id} <span className="text-lg">{result?.fl}</span>
-              </p>
+      {results &&
+        results.map(
+          (result) =>
+            result != "" && (
+              <div className="bg-lightblue border border-blue border-3 p-5 rounded-lg shadow-[0px_4px_15.8px_-1px_rgba(9,_40,_22,_0.25)]">
+                <p className="text-[36px] font-bold">
+                  {result?.meta?.id}{" "}
+                  <span className="text-lg">{result?.fl}</span>
+                </p>
 
-              <div className="flex flex-row gap-x-5 mt-5">
-                <p className="mt-5 text-lg">{result?.hwi?.hw}</p>
-                {result?.hwi?.prs?.[0]?.mw && (
-                  <p
-                    className="flex gap-x-2 bg-gray-300 text-lg rounded-lg w-fit p-2 hover:cursor-pointer"
-                    onClick={() => getAudio(result?.hwi?.prs?.[0]?.sound?.audio)}
-                  >
-                    <GiSpeaker size={30} />
-                    {result?.hwi?.prs?.[0]?.mw}
-                  </p>
-              )}
-            </div>
+                <div className="flex flex-row gap-x-5 mt-5">
+                  <p className="mt-5 text-lg flex">{result?.hwi?.hw}</p>
+                  {result?.hwi?.prs?.[0]?.mw && (
+                    <p
+                      className="flex gap-x-2 bg-blue text-white text-lg rounded-lg w-fit p-2 hover:cursor-pointer"
+                      onClick={() =>
+                        getAudio(result?.hwi?.prs?.[0]?.sound?.audio)
+                      }
+                    >
+                      <GiSpeaker size={30} />
+                      {result?.hwi?.prs?.[0]?.mw}
+                    </p>
+                  )}
+                </div>
 
-            <p className="mt-5 text-lg">{result?.shortdef}</p>
-          </div>
-        )))
-      )}
+                <p className="mt-5 text-lg">{result?.shortdef}</p>
+              </div>
+            )
+        )}
     </div>
   );
 }
