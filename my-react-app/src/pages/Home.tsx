@@ -1,16 +1,14 @@
-import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaMicrophone } from "react-icons/fa";
 import { FaCloudArrowUp } from "react-icons/fa6";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import ReactMarkdown from "react-markdown";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 function Home() {
   const [userInput, setUserInput] = useState("");
-  const [response, setResponse] = useState([]);
   const [promptResponses, setpromptResponses] = useState([""]);
   const [files, setFiles] = useState<File[]>([]);
   const {
@@ -93,41 +91,34 @@ function Home() {
             {transcript}
           </p>
         </div>
-        <button className="bg-gray-500 rounded-b-lg p-2 text-white ">
+        <Link
+          to="/Results"
+          state={{ transcript }}
+          className="bg-gray-500 rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
+        >
           Submit
-        </button>
+        </Link>
       </div>
 
-      <div className="bg-gray-200 rounded-xl flex flex-col text-xl mt-20 w-full">
+      <div className="bg-gray-200 rounded-xl flex flex-col text-xl mt-20 w-full text-center">
         <div className="flex flex-col gap-1 h-full w-full">
           <h1 className="text-lg p-3">Copy and Paste Your Doctor's Notes</h1>
           <div className="flex flex-col flex-1 m-5">
-            <input
-              type="text"
+            <textarea
               value={userInput}
               onChange={handleUserInput}
-              className="w-full h-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm p-3"
+              className="w-full h-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm p-3 resize-none overflow-scroll"
             />
           </div>
         </div>
 
-        <div className="bg-red-200 w-full">
-          <h1>Model Output</h1>
-          <div>
-            {promptResponses.map((promptResponse, index) => (
-              <div key={index}>
-                <div>{promptResponse}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <button
-          className="bg-gray-500 rounded-b-lg p-2 text-white"
-          onClick={getResponseForGivenPrompt}
+        <Link
+          to="/Results"
+          state={{ userInput }}
+          className="bg-gray-500 rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
         >
           Submit
-        </button>
+        </Link>
       </div>
 
       <div className="bg-gray-200 rounded-xl flex flex-col text-xl mt-20 w-full">
@@ -142,7 +133,7 @@ function Home() {
             hidden
           />
           <label htmlFor="fileUpload" className="">
-            <div className="border border-dashed border-3 p-3 m-10 text-center">
+            <div className="border border-dashed border-3 p-3 m-10 text-center hover:cursor-pointer">
               <div className="flex justify-center">
                 <FaCloudArrowUp size={50} />
               </div>
@@ -151,9 +142,13 @@ function Home() {
           </label>
         </div>
 
-        <button className="bg-gray-500 rounded-b-lg p-2 text-white">
+        <Link
+          to="/Results"
+          state={{ userInput }}
+          className="bg-gray-500 rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
+        >
           Submit
-        </button>
+        </Link>
       </div>
     </div>
   );
