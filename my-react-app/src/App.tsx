@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router";
+import { useLocation } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Records from "./pages/Records";
@@ -9,9 +11,10 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  const pathname = useLocation().pathname;
   return (
     <>
-      <Navbar />
+      {pathname !== "/Login" && <Navbar />}
       <Routes>
         <Route path="/Login" element={<Login />} />
         <Route path="/" element={
