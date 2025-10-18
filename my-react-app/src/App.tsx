@@ -9,14 +9,16 @@ import Dictionary from "./pages/Dictionary";
 import Results from "./pages/Results";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Signup from "./pages/Signup";
 
 function App() {
   const pathname = useLocation().pathname;
   return (
     <>
-      {pathname !== "/Login" && <Navbar />}
+      {(pathname !== "/Login" && pathname !== "/Signup") && <Navbar />}
       <Routes>
         <Route path="/Login" element={<Login />} />
+        <Route path="/Signup" element={<Signup />} />
         <Route path="/" element={
           <ProtectedRoute>
             <Home />

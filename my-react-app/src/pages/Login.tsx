@@ -29,14 +29,17 @@ function Login() {
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    
+    console.log(email, password);
     if (email && password) {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
       if (error) {
         setError(error.message);
+      }
+      else if (data.session) {
+        navigate("/");
       }
     }
   }
@@ -94,7 +97,7 @@ function Login() {
               Password
             </label>
             <input type="password" id="password" required onChange={(e) => setPassword(e.target.value)} className="bg-green/[0.7] p-2 rounded-sm mb-5" />
-            <button className="bg-darkgreen p-3 text-xl text-lightgreen rounded-sm cursor-pointer hover:brightness-[0.8]">
+            <button className="bg-darkgreen p-3 text-xl text-lightgreen rounded-sm mt-4 cursor-pointer hover:brightness-[0.8]">
               Login
             </button>
             {error && <p className="text-red-300 mt-2">{error}</p>}
@@ -113,7 +116,7 @@ function Login() {
             <span>Login with Google</span>
           </button>
         </section>
-        <p className="flex justify-center gap-2 mt-40 text-gray-500">
+        <p className="flex justify-center gap-2 mt-30 text-gray-500">
           Not a member?
           <a href="/Signup" className="text-darkgreen underline hover:text-darkblue">Sign up here</a>
         </p>
