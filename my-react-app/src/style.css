@@ -2,6 +2,7 @@
 @import "tailwindcss";
 
 @theme {
+  --color-background: #EFEFEF;
   --color-lightblue: #F4FFFF;
   --color-blue: #85BFC3;
   --color-darkblue: #2C9AA2;
@@ -11,7 +12,9 @@
   --color-darkgreen: #5AA057;
 
 
-  --shadow-custom: 0px 4px 40px 0px rgba(0, 0, 0, 0.1);
-
   --font-sans: 'Noto Sans', sans-serif;
+}
+
+body {
+  @apply bg-background;
 }

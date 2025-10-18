@@ -52,7 +52,7 @@ function Home() {
 
   return (
     <div className="grid grid-cols-2 grid-rows-2 gap-x-20 ml-50 mr-50 mb-25 font-sans">
-      <div className="bg-lightblue rounded-xl flex flex-col text-xl mt-20 w-full shadow-custom">
+      <div className="bg-lightblue rounded-xl flex flex-col text-xl mt-20 w-full shadow-[0px_4px_15.8px_-1px_rgba(9,_40,_22,_0.25)]">
         <h1 className="flex text-xl gap-x-2 mb-2 p-8 justify-center">
           <p className="text-center text-[36px] font-bold">Audio Recording</p>
         </h1>
@@ -114,7 +114,7 @@ function Home() {
         </Link>
       </div>
 
-      <div className="bg-lightgreen shadow-custom rounded-xl flex flex-col text-xl mt-20 w-full text-center">
+      <div className="bg-lightgreen shadow-[0px_4px_15.8px_-1px_rgba(9,_40,_22,_0.25)] rounded-xl flex flex-col text-xl mt-20 w-full text-center">
         <h1 className="text-[36px] p-5 font-bold">Text Document</h1>
         <div className="flex justify-center">
           <Tabs
@@ -205,7 +205,7 @@ function Home() {
               <textarea
                 value={userInput}
                 onChange={handleUserInput}
-                className="w-full h-full border border-darkgreen text-gray-900 text-sm rounded-sm p-3 resize-none overflow-scroll"
+                className="w-full h-full border border-darkgreen text-gray-900 text-sm rounded-sm p-3 resize-none overflow-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
               />
             </div>
             <Link
