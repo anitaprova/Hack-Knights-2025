@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { supabase } from "../utils/supabaseClient";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+import { supabase } from "../../utils/supabaseClient";
 
 interface Record {
   name: string;
@@ -10,6 +11,14 @@ interface Record {
 
 function Login() {
   const [records, setRecords] = useState<Record[]>([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) {
+        navigate("/");
+      }
+    })
+  }, []);
   const handleGoogleLogin = async () => {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
