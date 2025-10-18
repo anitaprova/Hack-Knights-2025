@@ -12,7 +12,7 @@ function Navbar() {
           className="flex items-center gap-2 hover:cursor-pointer"
           onClick={() => navigate(`/`)}
         >
-          <img src={ReactLogo} alt="React Logo" />
+          <img src={ReactLogo} alt="React Logo" onClick={() => navigate(`/`)}/>
           <p>
             Med<span className="text-darkgreen">Speak</span>
           </p>

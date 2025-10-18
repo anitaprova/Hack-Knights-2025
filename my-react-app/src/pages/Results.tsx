@@ -50,18 +50,22 @@ function Results() {
 	console.log(promptResponses);
 
   return (
-    <div className="flex flex-row font-sans text-xl justify-around p-3 rounded-lg mx-75 mt-5">
+    <div className="flex flex-row font-sans font-sans text-xl justify-around p-3 rounded-lg mx-75 mt-15">
       {!loading ? (
         <div className="w-full bg-gray-200 flex flex-col gap-y-3 p-3 rounded-md">
-          <h1 className="text-center text-xl">Model Output</h1>
+          <h1 className="text-center text-[36px] font-bold">Model Output</h1>
           <div>
-            {promptResponses?.map((promptResponse, index) => (
-              promptResponse != "" && (
-									<div key={index} className="my-4 p-3 bg-white rounded-lg shadow">
-										<ReactMarkdown>{promptResponse}</ReactMarkdown>
-									</div>
-							)
-            ))}
+            {promptResponses?.map(
+              (promptResponse, index) =>
+                promptResponse != "" && (
+                  <div
+                    key={index}
+                    className="my-4 p-3 bg-white rounded-lg shadow"
+                  >
+                    <ReactMarkdown>{promptResponse}</ReactMarkdown>
+                  </div>
+                )
+            )}
           </div>
         </div>
       ) : (
