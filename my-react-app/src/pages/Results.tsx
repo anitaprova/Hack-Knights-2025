@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
+import CircularProgress from "@mui/material/CircularProgress";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 function Results() {
@@ -20,13 +21,13 @@ function Results() {
     let prompt = "";
     if (location.state.transcript) {
       setInput(location.state.transcript);
-      prompt = `You are helping in an application that translates medical speech to plain english. You are given a transcript of what the doctor has said to a patient. Return only your response and dont write in markdown. Translate the following: ${location.state.transcript}`;
+      prompt = `You are helping in an application that translates medical speech to plain english. You are given a transcript of what the doctor has said to a patient. Return only your response. Translate the following: ${location.state.transcript}`;
     } else if (location.state.userInput) {
       setInput(location.state.userInput);
-      prompt = `You are helping in an application that translates medical speech to plain english. You are given the notes the doctor has given to the patient. Return only your response and dont write in markdown. Translate the following: ${location.state.userInput}`;
+      prompt = `You are helping in an application that translates medical speech to plain english. You are given the notes the doctor has given to the patient. Return only your response. Translate the following: ${location.state.userInput}`;
     } else if (location.state.fileText) {
       setInput(location.state.fileText);
-      prompt = `You are helping in an application that translates medical speech to plain english. You are given the text from a file that the doctor gave to the patient. Return only your response and dont write in markdown. Translate the following: ${location.state.fileText}`;
+      prompt = `You are helping in an application that translates medical speech to plain english. You are given the text from a file that the doctor gave to the patient. Return only your response. Translate the following: ${location.state.fileText}`;
     } else {
       console.log("No passed prompt");
       return;
@@ -46,22 +47,31 @@ function Results() {
     }
   };
 
+	console.log(promptResponses);
+
   return (
-    <div className="bg-gray-200 flex flex-row font-sans text-xl justify-around p-3 rounded-lg mx-75 mt-5">
-			{!loading ? (
-        <div className="w-full">
-          <h1>Model Output</h1>
+    <div className="flex flex-row font-sans text-xl justify-around p-3 rounded-lg mx-75 mt-5">
+      {!loading ? (
+        <div className="w-full bg-gray-200 flex flex-col gap-y-3 p-3 rounded-md">
+          <h1 className="text-center text-xl">Model Output</h1>
           <div>
-						{promptResponses.map((promptResponse, index) => (
-              <div key={index}>
-                <div>{promptResponse}</div>
-              </div>
+            {promptResponses?.map((promptResponse, index) => (
+              promptResponse != "" && (
+									<div key={index} className="my-4 p-3 bg-white rounded-lg shadow">
+										<ReactMarkdown>{promptResponse}</ReactMarkdown>
+									</div>
+							)
             ))}
           </div>
         </div>
-				
       ) : (
-        <p>Loading...</p>
+        <div className="flex flex-col gap-5 text-center mt-25">
+          <div className="w-full h-full">
+            <CircularProgress size={75} />
+          </div>
+          <h1 className="text-xl">Analyzing Input</h1>
+          <p className="text-sm">Generating response...</p>
+        </div>
       )}
     </div>
   );
