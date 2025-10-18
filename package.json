@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@types/react-speech-recognition": "^3.9.6"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1"
+  }
+}
