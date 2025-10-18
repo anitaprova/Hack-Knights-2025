@@ -6,7 +6,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <nav className="bg-white-60 font-sans shadow-[0px_1px_5px_0px_rgba(0,_0,_0,_0.25)] text-[36px] justify-between flex flex-row gap-x-10 font-sans text-xl justify-around p-3 rounded-md mx-25 mt-10">
+    <nav className="bg-white/[0.6] font-sans shadow-[0px_1px_5px_0px_rgba(0,_0,_0,_0.25)] text-[36px] justify-between flex flex-row gap-x-10 font-sans text-xl justify-around p-3 rounded-md mx-25 mt-10">
       <div>
         <div
           className="flex items-center gap-2 hover:cursor-pointer"
