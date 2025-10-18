@@ -100,8 +100,8 @@ function Home() {
             </button> */}
         </div>
 
-        <div className="p-3 w-full h-full">
-          <p className="w-full h-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm p-3 overflow-scroll">
+        <div className="p-3 w-full h-full mb-5">
+          <p className="w-full h-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl p-8 overflow-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {transcript}
           </p>
         </div>
@@ -198,14 +198,14 @@ function Home() {
 
         {value === 1 && (
           <div className="flex flex-col flex-1 gap-1 h-full w-full">
-            <div className="flex flex-col flex-1 m-5">
+            <div className="flex flex-col flex-1 m-10">
               <p className="text-left pb-2 pt-4">
-                Write your doctors medical notes
+                Write your medical notes
               </p>
               <textarea
                 value={userInput}
                 onChange={handleUserInput}
-                className="w-full h-full border border-darkgreen text-gray-900 text-sm rounded-sm p-3 resize-none overflow-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                className="w-full h-full bg-background rounded-xl border border-darkgreen text-gray-900 text-sm rounded-sm p-3 resize-none overflow-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
               />
             </div>
             <Link
