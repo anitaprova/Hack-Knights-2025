@@ -17,4 +17,5 @@
 
 body {
   @apply bg-background;
+  @apply font-sans;
 }
