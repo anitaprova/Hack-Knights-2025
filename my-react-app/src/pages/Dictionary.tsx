@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { GiSpeaker } from "react-icons/gi";
+import ConfusedFrog from "../assets/confusedfrog-image.png";
 
 interface DictionaryResult {
   meta?: { id?: string };
@@ -124,11 +125,7 @@ function Dictionary() {
         )
       ) : (
         <div className="flex flex-col gap-y-5 justify-center items-center">
-          <img
-            src="../src/assets/confusedfrog-image.png"
-            alt="confused frog"
-            width={450}
-          />
+          <img src={ConfusedFrog} alt="confused frog" width={450} />
         </div>
       )}
     </div>

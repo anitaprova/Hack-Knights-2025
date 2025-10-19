@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import Logo from "../assets/logo.svg";
 import LoginImage from "../assets/confusedfrog-image.png";
 import { supabase } from "../../utils/supabaseClient";
+import ConfusedFrog from "../assets/confusedfrog-image.png";
 import * as React from "react";
 
 function Signup() {
@@ -37,7 +38,7 @@ function Signup() {
   return (
     <div className="flex h-screen">
       <section className="bg-green w-1/2 flex items-center p-20">
-        <img src={LoginImage} alt="" />
+        <img src={ConfusedFrog} alt="" />
       </section>
       <main className="bg-lightgreen w-1/2 p-20">
         <section>
