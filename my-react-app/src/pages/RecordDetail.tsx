@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import VoiceButton from "../components/VoiceButton";
 import { supabase } from "../../utils/supabaseClient";
 
 interface Record {
@@ -43,6 +44,7 @@ function RecordDetail() {
         <p><strong>Type:</strong> {record.type}</p>
         <p><strong>Duration:</strong> {record.duration}</p>
         <p><strong>Created on:</strong> {record.created_at}</p>
+        <VoiceButton text={record.translation} />
         <section className="flex gap-5">
           <section>
             <h2 className="text-xl mt-5 mb-2">Translation:</h2>
@@ -52,7 +54,7 @@ function RecordDetail() {
             <h2 className="text-xl mt-5 mb-2">Content:</h2>
             <p className="whitespace-pre-wrap">{record.content}</p>
           </section>
-          
+
         </section>
       </div>
     </main>
