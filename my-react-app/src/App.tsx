@@ -9,6 +9,7 @@ import Dictionary from "./pages/Dictionary";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./pages/Signup";
+import RecordDetail from "./pages/RecordDetail";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -21,6 +22,11 @@ function App() {
         <Route path="/" element={
           <ProtectedRoute>
             <Home />
+          </ProtectedRoute>
+        } />
+        <Route path="/Records/:id" element={
+          <ProtectedRoute>
+            <RecordDetail />
           </ProtectedRoute>
         } />
         <Route path="/Records" element={
