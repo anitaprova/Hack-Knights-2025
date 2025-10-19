@@ -15,7 +15,6 @@ interface DictionaryResult {
   shortdef?: string[];
 }
 
-
 function Dictionary() {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<DictionaryResult[]>([]);
@@ -51,8 +50,7 @@ function Dictionary() {
       .catch((err) => console.error(err.message));
   };
 
-
-  const getAudio = (basefilename : string) => {
+  const getAudio = (basefilename: string) => {
     if (!basefilename) return;
 
     let subdirectory = "";
@@ -95,7 +93,7 @@ function Dictionary() {
         </div>
       </div>
 
-      {results &&
+      {results.length > 0 ? (
         results.map(
           (result) =>
             result != null && (
@@ -123,7 +121,16 @@ function Dictionary() {
                 <p className="mt-5 text-lg">{result?.shortdef}</p>
               </div>
             )
-        )}
+        )
+      ) : (
+        <div className="flex flex-col gap-y-5 justify-center items-center">
+          <img
+            src="../src/assets/confusedfrog-image.png"
+            alt="confused frog"
+            width={450}
+          />
+        </div>
+      )}
     </div>
   );
 }
