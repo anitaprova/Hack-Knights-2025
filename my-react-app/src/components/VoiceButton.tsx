@@ -1,12 +1,40 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { HiMiniSpeakerWave } from "react-icons/hi2";
+import { supabase } from "../../utils/supabaseClient";
 
 export function VoiceButton({ text }: { text: string }) {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [voiceId, setVoiceId] = useState("EXAVITQu4vr4xnSDxMaL");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const location = useLocation();
-  const VOICE_ID = "EXAVITQu4vr4xnSDxMaL";
+
+  useEffect(() => {
+    const fetchVoiceId = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data } = await supabase
+        .from('account_settings')
+        .select('voice')
+        .eq('user_id', user.id)
+        .single();
+
+      if (data?.voice) {
+        setVoiceId(data.voice);
+      } else {
+        // Create default voice setting if none exists
+        await supabase
+          .from('account_settings')
+          .upsert({
+            user_id: user.id,
+            voice: 'EXAVITQu4vr4xnSDxMaL'
+          });
+      }
+    };
+
+    fetchVoiceId();
+  }, []);
   const speak = async () => {
     if (isGenerating) return;
     setIsGenerating(true);
@@ -18,7 +46,7 @@ export function VoiceButton({ text }: { text: string }) {
         audioRef.current = null;
       }
       const response = await fetch(
-        `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`,
+        `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
         {
           method: "POST",
           headers: {
