@@ -16,7 +16,7 @@ import { supabase } from "../../utils/supabaseClient";
 
 function Home() {
   const [userInput, setUserInput] = useState("");
-  const [files, setFiles] = useState<File[]>([]);
+  const [file, setFile] = useState<File | null>(null);
   const [fileText, setFileText] = useState("");
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
@@ -61,24 +61,29 @@ function Home() {
   };
 
   const handleSubmit = (text: string) => {
+    setResultValue(1);
     setType(text);
+    console.log(type);
     getResponseForGivenPrompt(text);
   };
 
-  const handleTextChange = (event, newValue) => setTextValue(newValue);
-  const handleResultChange = (event, newValue) => setResultValue(newValue);
+  const handleTextChange = (_event: React.SyntheticEvent, newValue: number) =>
+    setTextValue(newValue);
+  const handleResultChange = (_event: React.SyntheticEvent, newValue: number) =>
+    setResultValue(newValue);
 
   if (!browserSupportsSpeechRecognition) {
     console.log("Speech recognition not supported in this browser.");
   }
 
-  const handleFileChange = (event) => {
-    setFiles(event.target.files[0]);
-    extractText(event);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+    const file = event.target.files[0];
+    setFile(file);
+    extractText(file);
   };
 
-  function extractText(event) {
-    const file = event.target.files[0];
+  function extractText(file: File) {
     pdfToText(file)
       .then((text) => setFileText(text))
       .catch((error) =>
@@ -86,8 +91,8 @@ function Home() {
       );
   }
 
-  const handleUserInput = (e) => {
-    setUserInput(e.target.value);
+  const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setUserInput(event.target.value);
   };
   const formatType = (type: string) => {
     switch (type) {
@@ -127,8 +132,12 @@ function Home() {
   return (
     <div className="grid grid-cols-2 gap-x-20 h-[75vh] mx-25 mt-10 m-10">
       {/* Add Record */}
-      <div className="bg-lightgreen shadow-custom rounded-xl flex flex-col text-xl text-center overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        <h1 className="text-4xl p-6 font-bold">Add Record</h1>
+      <div className="bg-lightgreen border-3 border-darkgreen rounded-xl flex flex-col text-xl text-center overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <input
+          type="text"
+          placeholder="Record"
+          className="p-1 text-center font-bold text-4xl rounded-lg m-5"
+        />
         <div className="flex justify-center">
           <Tabs
             value={textValue}
@@ -195,7 +204,7 @@ function Home() {
                 hidden
               />
               <label htmlFor="fileUpload">
-                <div className="border-dashed border-5 border-darkgreen p-4 text-center hover:cursor-pointer">
+                <div className="border-dashed border-5 border-darkgreen p-4 text-center hover:cursor-pointer hover:bg-green-100">
                   <div className="flex justify-center">
                     <FaCloudArrowUp size={100} />
                   </div>
@@ -207,14 +216,14 @@ function Home() {
               {fileText ? (
                 <div className="bg-green-300/[0.35] m-5 flex gap-x-2 p-1.5 rounded-sm">
                   <IoDocumentText size={25} />
-                  <p>{files?.name}</p>
+                  <p>{file?.name}</p>
                 </div>
               ) : null}
             </div>
 
             {/* Button pinned to bottom */}
             <button
-              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center mt-auto"
+              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center mt-auto hover:bg-green-900"
               onClick={() => handleSubmit("file")}
             >
               Translate
@@ -235,7 +244,7 @@ function Home() {
             </div>
 
             <button
-              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
+              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center hover:bg-green-900"
               onClick={() => handleSubmit("userInput")}
             >
               Translate
@@ -251,30 +260,36 @@ function Home() {
                 <div className="flex flex-col gap-y-5 items-center">
                   <button
                     onClick={SpeechRecognition.stopListening}
-                    className="bg-red-200 p-6 rounded-full w-fit mb-5 hover:cursor-pointer"
+                    className="bg-red-200 p-6 rounded-full w-fit mb-5 hover:cursor-pointer hover:bg-red-600"
                   >
                     <FaStop size={100} />
                   </button>
-                  <p className="text-3xl mt-5">Start Recording</p>
+                  <p className="text-3xl mt-3">Start Recording</p>
                 </div>
               </div>
             ) : (
               <div className="flex items-center justify-center flex-1">
                 <div className="flex flex-col items-center">
                   <button
-                    onClick={SpeechRecognition.startListening}
-                    className="bg-green p-6 rounded-full w-fit mb-5 hover:cursor-pointer"
+                    onClick={() => {
+                      SpeechRecognition.startListening({
+                        continuous: true,
+                        language: "en-US",
+                      });
+                      setResultValue(0);
+                    }}
+                    className="bg-green p-6 rounded-full w-fit mb-5 hover:cursor-pointer hover:bg-green-600"
                   >
                     <FaMicrophone size={100} />
                   </button>
-                  <p className="text-3xl mt-5">Start Recording</p>
+                  <p className="text-3xl mt-3">Start Recording</p>
                 </div>
               </div>
             )}
 
             {/* Push button to bottom */}
             <button
-              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center mt-auto"
+              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer hover:bg-green-900 text-center mt-auto"
               onClick={() => handleSubmit("transcript")}
             >
               Translate
@@ -284,7 +299,7 @@ function Home() {
       </div>
 
       {/* Results */}
-      <div className="bg-gray-100 rounded-xl shadow-custom flex flex-col overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="bg-gray-100 rounded-xl border-3 border-darkgreen flex flex-col overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <h1 className="text-center text-4xl font-bold m-5">Results</h1>
         <div className="flex justify-center">
           <Tabs
