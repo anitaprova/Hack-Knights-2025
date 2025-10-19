@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import CircularProgress from "@mui/material/CircularProgress";
 import { FaMicrophone } from "react-icons/fa";
@@ -13,6 +12,7 @@ import pdfToText from "react-pdftotext";
 import { IoDocumentText } from "react-icons/io5";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import { supabase } from "../../utils/supabaseClient";
 
 function Home() {
   const [userInput, setUserInput] = useState("");
@@ -30,12 +30,16 @@ function Home() {
 
   const getResponseForGivenPrompt = async (inputType: string) => {
     let prompt = "";
+    let original_text = "";
     if (inputType === "transcript") {
       prompt = `You are helping in an application that translates medical speech to plain english. You are given a transcript of what the doctor has said to a patient. Return only your response. Translate the following: ${transcript}`;
+      original_text = transcript;
     } else if (inputType === "userInput") {
       prompt = `You are helping in an application that translates medical speech to plain english. You are given the notes the doctor has given to the patient. Return only your response. Translate the following: ${userInput}`;
+      original_text = userInput;
     } else if (inputType === "file") {
       prompt = `You are helping in an application that translates medical speech to plain english. You are given the text from a file that the doctor gave to the patient. Return only your response. Translate the following: ${fileText}`;
+      original_text = fileText;
     } else {
       console.log("No passed prompt");
       return;
@@ -49,6 +53,7 @@ function Home() {
       const text = response.text();
       setpromptResponses([text]);
       setLoading(false);
+      fileUpload(original_text, text, inputType);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -84,6 +89,31 @@ function Home() {
   const handleUserInput = (e) => {
     setUserInput(e.target.value);
   };
+  const fileUpload = async (original_text: string, translation: string, type: string) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      console.error('No user found');
+      return;
+    }
+    
+    const recordName = files[0]?.name || `${type}-record-${Date.now()}`;
+    
+    const { data, error } = await supabase
+      .from('records')
+      .insert({
+        user_id: user.id,
+        name: recordName,
+        type: type,
+        content: original_text,
+        translation: translation,
+      });
+      
+    if (error) {
+      console.error('Insert error:', error);
+    } else {
+      console.log('Record inserted successfully:', data);
+    }
+  }
 
   return (
     <div className="grid grid-cols-2 gap-x-20 h-[75vh] mx-25 mt-10 m-10">

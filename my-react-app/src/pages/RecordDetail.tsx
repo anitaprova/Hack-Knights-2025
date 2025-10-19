@@ -7,7 +7,6 @@ interface Record {
   id: number;
   name: string;
   type: string;
-  duration: string;
   created_at: string;
   content: string;
   translation: string;
@@ -42,7 +41,7 @@ function RecordDetail() {
       <h1 className="text-2xl mb-3">{record.name}</h1>
       <div className="bg-lightgreen p-5 rounded-md shadow-md">
         <p><strong>Type:</strong> {record.type}</p>
-        <p><strong>Duration:</strong> {record.duration}</p>
+        <p><strong>Content length:</strong> {record.content.length}</p>
         <p><strong>Created on:</strong> {record.created_at}</p>
         <VoiceButton text={record.translation} />
         <section className="flex gap-5">
