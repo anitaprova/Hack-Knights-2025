@@ -48,10 +48,10 @@ function Results() {
   };
 
   return (
-    <div className="flex flex-row font-sans text-xl justify-around p-3 rounded-lg mx-75 mt-15">
+    <div className="flex flex-row text-xl justify-around p-3 rounded-lg mx-75 mt-15">
       {!loading ? (
-        <div className="w-full bg-gray-200 flex flex-col gap-y-3 p-3 rounded-md">
-          <h1 className="text-center text-[36px] font-bold">Model Output</h1>
+        <div className="w-full bg-gray-200 flex flex-col gap-y-3 p-3 rounded-md shadow-custom">
+          <h1 className="text-center text-4xl font-bold">Model Output</h1>
           <div>
             {promptResponses?.map(
               (promptResponse, index) =>
