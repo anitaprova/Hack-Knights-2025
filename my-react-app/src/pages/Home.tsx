@@ -110,7 +110,7 @@ function Home() {
       return;
     }
     
-    const recordName = files[0]?.name || `${type}-record-${Date.now()}`;
+    const recordName = file?.name || `${type}-record-${Date.now()}`;
     
     const { data, error } = await supabase
       .from('records')
