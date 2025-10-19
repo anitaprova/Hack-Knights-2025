@@ -30,7 +30,7 @@ function Dictionary() {
       });
   };
 
-  const getAudio = (basefilename) => {
+  const getAudio = (basefilename : string) => {
     if (!basefilename) return;
 
     let subdirectory = "";
@@ -54,18 +54,18 @@ function Dictionary() {
   console.log(results);
 
   return (
-    <div className="flex flex-col gap-y-20 ml-50 mr-50 mb-25 mt-25 font-sans">
-      <div className="flex">
+    <div className="flex flex-col gap-y-20 ml-50 mr-50 mb-25 mt-15">
+      <div className="flex text-md">
         <input
           type="text"
           onChange={handleInput}
           onKeyDown={handleKeyPress}
           placeholder="Search a medical term here..."
-          className="bg-white w-full text-xl rounded-l-lg p-5 border border border-darkgreen"
+          className="bg-white w-full rounded-l-lg p-2 border border-darkgreen"
         />
-        <div className="bg-darkgreen rounded-r-lg border border p-5 border-darkgreen">
+        <div className="bg-darkgreen rounded-r-lg border p-2 border-darkgreen">
           <FaSearch
-            size={40}
+            size={35}
             color="white"
             className="hover:cursor-pointer"
             onClick={handleSubmit}
@@ -77,8 +77,8 @@ function Dictionary() {
         results.map(
           (result) =>
             result != "" && (
-              <div className="bg-lightblue border border-blue border-3 p-5 rounded-lg shadow-[0px_4px_15.8px_-1px_rgba(9,_40,_22,_0.25)]">
-                <p className="text-[36px] font-bold">
+              <div className="bg-lightblue border border-blue p-5 rounded-lg shadow-custom">
+                <p className="text-4xl font-bold">
                   {result?.meta?.id}{" "}
                   <span className="text-lg">{result?.fl}</span>
                 </p>

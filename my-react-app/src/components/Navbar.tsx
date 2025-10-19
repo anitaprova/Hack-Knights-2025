@@ -11,13 +11,17 @@ function Navbar() {
         className="flex items-center gap-2 group cursor-pointer"
         onClick={() => navigate(`/`)}
       >
-        <img 
-        src={Logo} 
-        alt="MedSpeak Logo" onClick={() => navigate(`/`)} 
-        className="group-hover:hue-rotate-30 transition-all duration-300"
+        <img
+          src={Logo}
+          alt="MedSpeak Logo"
+          onClick={() => navigate(`/`)}
+          className="group-hover:hue-rotate-30 transition-all duration-300"
         />
         <p>
-          Med<span className="text-[#019A6A] group-hover:text-darkblue transition-all duration-300">Speak</span>
+          Med
+          <span className="text-[#019A6A] group-hover:text-darkblue transition-all duration-300">
+            Speak
+          </span>
         </p>
       </div>
 
@@ -38,7 +42,11 @@ function Navbar() {
           className="flex items-center gap-2 hover:cursor-pointer"
           onClick={() => navigate(`/Account`)}
         >
-          <MdOutlineAccountCircle size={45} className="hover:text-darkblue transition-all duration-300" />
+          <MdOutlineAccountCircle
+            color="#5AA057"
+            size={45}
+            className="hover:text-darkblue transition-all duration-300"
+          />
         </div>
       </div>
     </nav>
