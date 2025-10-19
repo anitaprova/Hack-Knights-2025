@@ -19,6 +19,9 @@ function Account() {
       </div>
 
       <div className="flex flex-col gap-y-5">
+        <button className="bg-blue p-3 rounded-lg text-xl hover:cursor-pointer">
+          Select Voice
+        </button>
         <button
           onClick={signOut}
           className="bg-green p-3 rounded-lg text-xl hover:cursor-pointer"

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import CircularProgress from "@mui/material/CircularProgress";
 import { FaMicrophone } from "react-icons/fa";
@@ -56,6 +55,7 @@ function Home() {
   };
 
   const handleSubmit = (text: string) => {
+    setResultValue(1);
     setType(text);
     getResponseForGivenPrompt(text);
   };
@@ -89,7 +89,11 @@ function Home() {
     <div className="grid grid-cols-2 gap-x-20 h-[75vh] mx-25 mt-10 m-10">
       {/* Add Record */}
       <div className="bg-lightgreen shadow-custom rounded-xl flex flex-col text-xl text-center overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        <h1 className="text-4xl p-6 font-bold">Add Record</h1>
+        <input
+          type="text"
+          placeholder="Record"
+          className="p-1 text-center font-bold text-4xl rounded-lg m-5"
+        />
         <div className="flex justify-center">
           <Tabs
             value={textValue}
@@ -156,7 +160,7 @@ function Home() {
                 hidden
               />
               <label htmlFor="fileUpload">
-                <div className="border-dashed border-5 border-darkgreen p-4 text-center hover:cursor-pointer">
+                <div className="border-dashed border-5 border-darkgreen p-4 text-center hover:cursor-pointer hover:bg-green-100">
                   <div className="flex justify-center">
                     <FaCloudArrowUp size={100} />
                   </div>
@@ -175,7 +179,7 @@ function Home() {
 
             {/* Button pinned to bottom */}
             <button
-              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center mt-auto"
+              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center mt-auto hover:bg-green-900"
               onClick={() => handleSubmit("file")}
             >
               Translate
@@ -196,7 +200,7 @@ function Home() {
             </div>
 
             <button
-              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
+              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center hover:bg-green-900"
               onClick={() => handleSubmit("userInput")}
             >
               Translate
@@ -212,11 +216,11 @@ function Home() {
                 <div className="flex flex-col gap-y-5 items-center">
                   <button
                     onClick={SpeechRecognition.stopListening}
-                    className="bg-red-200 p-6 rounded-full w-fit mb-5 hover:cursor-pointer"
+                    className="bg-red-200 p-6 rounded-full w-fit mb-5 hover:cursor-pointer hover:bg-red-600"
                   >
                     <FaStop size={100} />
                   </button>
-                  <p className="text-3xl mt-5">Start Recording</p>
+                  <p className="text-3xl mt-3">Start Recording</p>
                 </div>
               </div>
             ) : (
@@ -224,18 +228,18 @@ function Home() {
                 <div className="flex flex-col items-center">
                   <button
                     onClick={SpeechRecognition.startListening}
-                    className="bg-green p-6 rounded-full w-fit mb-5 hover:cursor-pointer"
+                    className="bg-green p-6 rounded-full w-fit mb-5 hover:cursor-pointer hover:bg-green-600"
                   >
                     <FaMicrophone size={100} />
                   </button>
-                  <p className="text-3xl mt-5">Start Recording</p>
+                  <p className="text-3xl mt-3">Start Recording</p>
                 </div>
               </div>
             )}
 
             {/* Push button to bottom */}
             <button
-              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center mt-auto"
+              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer hover:bg-green-900 text-center mt-auto"
               onClick={() => handleSubmit("transcript")}
             >
               Translate
