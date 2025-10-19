@@ -89,6 +89,15 @@ function Home() {
   const handleUserInput = (e) => {
     setUserInput(e.target.value);
   };
+  const formatType = (type: string) => {
+    switch (type) {
+      case 'userInput': return 'Text input';
+      case 'file': return 'Text file';
+      case 'transcript': return 'Audio';
+      default: return type;
+    }
+  };
+
   const fileUpload = async (original_text: string, translation: string, type: string) => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
@@ -103,7 +112,7 @@ function Home() {
       .insert({
         user_id: user.id,
         name: recordName,
-        type: type,
+        type: formatType(type),
         content: original_text,
         translation: translation,
       });

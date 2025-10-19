@@ -36,8 +36,8 @@ function Records() {
     <main className="flex flex-col mt-10 px-25">
       <h1 className="text-2xl mb-3">Records</h1>
       {records.length !== 0 ?
-        <table className="p-3 bg-lightgreen text-left shadow-md rounded-md">
-          <thead className="border-b-2 border-solid border-b-blue text-sm uppercase bg-green text-gray-700">
+        <table className="p-3 bg-lightgreen text-left border-2 border-solid border-darkgreen rounded overflow-hidden">
+          <thead className="border-b-2 border-solid border-b-darkgreen text-sm uppercase bg-green text-gray-700">
             <tr>
               <th className="p-2 rounded-tl-md">Name</th>
               <th className="p-2">Type</th>
@@ -48,12 +48,12 @@ function Records() {
           </thead>
           <tbody>
             {records.reverse().map((record, index) => (
-              <tr key={index} className="hover:bg-blue/[0.3] cursor-pointer" onClick={() => navigate(`/Records/${record.id}`)}>
-                <td className="p-3">{truncateString(record.name)}</td>
+              <tr key={index} className={`hover:bg-blue/[0.3] cursor-pointer ${index === records.length - 1 ? 'last:rounded-b' : ''}`} onClick={() => navigate(`/Records/${record.id}`)}>
+                <td className={`p-3 ${index === records.length - 1 ? 'rounded-bl' : ''}`}>{truncateString(record.name)}</td>
                 <td className="p-3">{record.type}</td>
                 <td className="p-3">{new Date(record.created_at).toLocaleDateString()}</td>
                 <td className="p-3">{record.content.length}</td>
-                <td className="p-3">{truncateString(record.translation)}</td>
+                <td className={`p-3 ${index === records.length - 1 ? 'rounded-br' : ''}`}>{truncateString(record.translation)}</td>
               </tr>
             ))}
           </tbody>
