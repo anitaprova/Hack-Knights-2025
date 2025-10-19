@@ -4,17 +4,8 @@ import { FcGoogle } from "react-icons/fc";
 import Logo from "../assets/logo.svg";
 import LoginImage from "../assets/login-image.png";
 import { supabase } from "../../utils/supabaseClient";
-import * as React from "react";
-
-interface Record {
-  name: string;
-  type: string;
-  duration: string;
-  content: string;
-}
 
 function Login() {
-  const [records, setRecords] = useState<Record[]>([]);
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -54,22 +45,17 @@ function Login() {
       },
     })
   }
-  const fetchRecords = async () => {
-    const { data, error } = await supabase.from('records').select('*');
-    if (error) { console.error(error) }
-    else if (data) { setRecords(data) }
-  }
-  const testSupabase = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      await supabase
-        .from('records')
-        .insert(
-          { name: 'some record!', user_id: user.id, type: "audio", duration: "00:42:31", content: "some transcript" }
-        );
-      fetchRecords();
-    }
-  }
+  // const testSupabase = async () => {
+  //   const { data: { user } } = await supabase.auth.getUser();
+  //   if (user) {
+  //     await supabase
+  //       .from('records')
+  //       .insert(
+  //         { name: 'some record!', user_id: user.id, type: "audio", duration: "00:42:31", content: "some transcript" }
+  //       );
+  //     fetchRecords();
+  //   }
+  // }
   return (
     <div className="flex h-screen">
       <section className="bg-green w-1/2 flex items-center p-20">
