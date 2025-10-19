@@ -1,21 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { GiSpeaker } from "react-icons/gi";
 
+interface DictionaryResult {
+  meta?: { id?: string };
+  fl?: string;
+  hwi?: {
+    hw?: string;
+    prs?: {
+      mw?: string;
+      sound?: { audio?: string };
+    }[];
+  };
+  shortdef?: string[];
+}
+
+
 function Dictionary() {
   const [search, setSearch] = useState("");
-  const [results, setResults] = useState([""]);
+  const [results, setResults] = useState<DictionaryResult[]>([]);
   const api_key = import.meta.env.VITE_MERRIAM_API_KEY;
 
-  const handleInput = (e) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
-  const handleKeyPress = (e) =>{
+  const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleSubmit();
     }
-  }
+  };
 
   const handleSubmit = () => {
     fetch(
@@ -23,12 +37,20 @@ function Dictionary() {
     )
       .then((response) => response.json())
       .then((data) => {
-        setResults(data);
+        if (data.length === 0) {
+          setResults([]);
+          return;
+        }
+
+        if (typeof data[0] === "string") {
+          setResults([]);
+        } else {
+          setResults(data);
+        }
       })
-      .catch((err) => {
-        console.error(err.message);
-      });
+      .catch((err) => console.error(err.message));
   };
+
 
   const getAudio = (basefilename : string) => {
     if (!basefilename) return;
@@ -76,8 +98,8 @@ function Dictionary() {
       {results &&
         results.map(
           (result) =>
-            result != "" && (
-              <div className="bg-lightblue border border-blue p-5 rounded-lg shadow-custom">
+            result != null && (
+              <div className="bg-lightblue border-blue p-5 rounded-lg border-3">
                 <p className="text-4xl font-bold">
                   {result?.meta?.id}{" "}
                   <span className="text-lg">{result?.fl}</span>
@@ -89,7 +111,7 @@ function Dictionary() {
                     <p
                       className="flex gap-x-2 bg-blue text-white text-lg rounded-lg w-fit p-2 hover:cursor-pointer"
                       onClick={() =>
-                        getAudio(result?.hwi?.prs?.[0]?.sound?.audio)
+                        getAudio(result?.hwi?.prs?.[0]?.sound?.audio ?? "")
                       }
                     >
                       <GiSpeaker size={30} />

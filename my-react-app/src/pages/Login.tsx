@@ -6,26 +6,20 @@ import LoginImage from "../assets/login-image.png";
 import { supabase } from "../../utils/supabaseClient";
 import * as React from "react";
 
-interface Record {
-  name: string;
-  type: string;
-  duration: string;
-  content: string;
-}
-
 function Login() {
-  const [records, setRecords] = useState<Record[]>([]);
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) {
         navigate("/");
       }
-    })
+    });
   }, [navigate]);
+
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -37,39 +31,24 @@ function Login() {
       });
       if (error) {
         setError(error.message);
-      }
-      else if (data.session) {
+      } else if (data.session) {
         navigate("/");
       }
     }
-  }
+  };
+
   const handleGoogleLogin = async () => {
     await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: "google",
       options: {
         queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
+          access_type: "offline",
+          prompt: "consent",
         },
       },
-    })
-  }
-  const fetchRecords = async () => {
-    const { data, error } = await supabase.from('records').select('*');
-    if (error) { console.error(error) }
-    else if (data) { setRecords(data) }
-  }
-  const testSupabase = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      await supabase
-        .from('records')
-        .insert(
-          { name: 'some record!', user_id: user.id, type: "audio", duration: "00:42:31", content: "some transcript" }
-        );
-      fetchRecords();
-    }
-  }
+    });
+  };
+
   return (
     <div className="flex h-screen">
       <section className="bg-green w-1/2 flex items-center p-20">
@@ -84,19 +63,29 @@ function Login() {
               <span className="text-darkgreen">Speak</span>
             </h1>
           </div>
-          <h2 className="text-l text-center mt-5 text-gray-500">Record, translate, and understand medical talk</h2>
+          <h2 className="text-l text-center mt-5 text-gray-500">
+            Record, translate, and understand medical talk
+          </h2>
         </section>
         <section className="flex flex-col justify-center mt-10 px-30">
           <form className="flex flex-col" onSubmit={handleEmailLogin}>
-            <label htmlFor="email">
-              Email
-            </label>
-            <input type="email" id="email" required onChange={(e) => setEmail(e.target.value)} className="bg-green/[0.7] p-2 rounded-sm mb-5" />
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              className="bg-green/[0.7] p-2 rounded-sm mb-5"
+            />
 
-            <label htmlFor="password">
-              Password
-            </label>
-            <input type="password" id="password" required onChange={(e) => setPassword(e.target.value)} className="bg-green/[0.7] p-2 rounded-sm mb-5" />
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+              className="bg-green/[0.7] p-2 rounded-sm mb-5"
+            />
             <button className="bg-darkgreen p-3 text-xl text-lightgreen rounded-sm mt-4 cursor-pointer hover:brightness-[0.8]">
               Login
             </button>
@@ -118,7 +107,12 @@ function Login() {
         </section>
         <p className="flex justify-center gap-2 mt-30 text-gray-500">
           Not a member?
-          <a href="/Signup" className="text-darkgreen underline hover:text-darkblue">Sign up here</a>
+          <a
+            href="/Signup"
+            className="text-darkgreen underline hover:text-darkblue"
+          >
+            Sign up here
+          </a>
         </p>
         {/* <button onClick={testSupabase}>
           Insert into supabase

@@ -15,7 +15,7 @@ import Tab from "@mui/material/Tab";
 
 function Home() {
   const [userInput, setUserInput] = useState("");
-  const [files, setFiles] = useState<File[]>([]);
+  const [file, setFile] = useState<File | null>(null);
   const [fileText, setFileText] = useState("");
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
@@ -57,23 +57,27 @@ function Home() {
   const handleSubmit = (text: string) => {
     setResultValue(1);
     setType(text);
+    console.log(type);
     getResponseForGivenPrompt(text);
   };
 
-  const handleTextChange = (event, newValue) => setTextValue(newValue);
-  const handleResultChange = (event, newValue) => setResultValue(newValue);
+  const handleTextChange = (_event: React.SyntheticEvent, newValue: number) =>
+    setTextValue(newValue);
+  const handleResultChange = (_event: React.SyntheticEvent, newValue: number) =>
+    setResultValue(newValue);
 
   if (!browserSupportsSpeechRecognition) {
     console.log("Speech recognition not supported in this browser.");
   }
 
-  const handleFileChange = (event) => {
-    setFiles(event.target.files[0]);
-    extractText(event);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+    const file = event.target.files[0];
+    setFile(file);
+    extractText(file);
   };
 
-  function extractText(event) {
-    const file = event.target.files[0];
+  function extractText(file: File) {
     pdfToText(file)
       .then((text) => setFileText(text))
       .catch((error) =>
@@ -81,14 +85,14 @@ function Home() {
       );
   }
 
-  const handleUserInput = (e) => {
-    setUserInput(e.target.value);
+  const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setUserInput(event.target.value);
   };
 
   return (
     <div className="grid grid-cols-2 gap-x-20 h-[75vh] mx-25 mt-10 m-10">
       {/* Add Record */}
-      <div className="bg-lightgreen shadow-custom rounded-xl flex flex-col text-xl text-center overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="bg-lightgreen border-3 border-darkgreen rounded-xl flex flex-col text-xl text-center overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <input
           type="text"
           placeholder="Record"
@@ -172,7 +176,7 @@ function Home() {
               {fileText ? (
                 <div className="bg-green-300/[0.35] m-5 flex gap-x-2 p-1.5 rounded-sm">
                   <IoDocumentText size={25} />
-                  <p>{files?.name}</p>
+                  <p>{file?.name}</p>
                 </div>
               ) : null}
             </div>
@@ -227,7 +231,13 @@ function Home() {
               <div className="flex items-center justify-center flex-1">
                 <div className="flex flex-col items-center">
                   <button
-                    onClick={SpeechRecognition.startListening}
+                    onClick={() => {
+                      SpeechRecognition.startListening({
+                        continuous: true,
+                        language: "en-US",
+                      });
+                      setResultValue(0);
+                    }}
                     className="bg-green p-6 rounded-full w-fit mb-5 hover:cursor-pointer hover:bg-green-600"
                   >
                     <FaMicrophone size={100} />
@@ -249,7 +259,7 @@ function Home() {
       </div>
 
       {/* Results */}
-      <div className="bg-gray-100 rounded-xl shadow-custom flex flex-col overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="bg-gray-100 rounded-xl border-3 border-darkgreen flex flex-col overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <h1 className="text-center text-4xl font-bold m-5">Results</h1>
         <div className="flex justify-center">
           <Tabs

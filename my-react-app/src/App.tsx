@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import Records from "./pages/Records";
 import Account from "./pages/Account";
 import Dictionary from "./pages/Dictionary";
-import Results from "./pages/Results";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./pages/Signup";
@@ -37,11 +36,6 @@ function App() {
         <Route path="/Dictionary" element={
           <ProtectedRoute>
             <Dictionary />
-          </ProtectedRoute>
-        } />
-        <Route path="/Results" element={
-          <ProtectedRoute>
-            <Results />
           </ProtectedRoute>
         } />
       </Routes>
