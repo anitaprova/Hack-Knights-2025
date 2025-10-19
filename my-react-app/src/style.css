@@ -11,11 +11,12 @@
   --color-green: #C7DBC7;
   --color-darkgreen: #5AA057;
 
+  --font-noto: 'Noto Sans', sans-serif;
 
-  --font-sans: 'Noto Sans', sans-serif;
+  --shadow-custom: 0 4px 15.8px -1px rgba(9, 40, 22, 0.25);
 }
 
 body {
   @apply bg-background;
-  @apply font-sans;
+  @apply font-noto;
 }

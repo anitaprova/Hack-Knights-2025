@@ -51,10 +51,10 @@ function Home() {
   console.log(listening);
 
   return (
-    <div className="grid grid-cols-2 gap-x-20 ml-50 mr-50 mt-25 font-sans">
-      <div className="bg-lightblue rounded-xl flex flex-col text-xl mt-20 w-full shadow-[0px_4px_15.8px_-1px_rgba(9,_40,_22,_0.25)]">
+    <div className="grid grid-cols-2 gap-x-20 ml-50 mr-50 mb-5">
+      <div className="bg-lightblue rounded-xl flex flex-col text-xl mt-20 w-full shadow-custom">
         <h1 className="flex text-xl gap-x-2 mb-2 p-8 justify-center">
-          <p className="text-center text-[36px] font-bold">Audio Recording</p>
+          <p className="text-center text-4xl font-bold">Audio Recording</p>
         </h1>
 
         <div className="p-3 flex-1">
@@ -107,14 +107,14 @@ function Home() {
         <Link
           to="/Results"
           state={{ transcript }}
-          className="bg-darkblue text-[36px] rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
+          className="bg-darkblue text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
         >
           Translate
         </Link>
       </div>
 
-      <div className="bg-lightgreen shadow-[0px_4px_15.8px_-1px_rgba(9,_40,_22,_0.25)] rounded-xl flex flex-col text-xl mt-20 w-full text-center">
-        <h1 className="text-[36px] p-5 font-bold">Text Document</h1>
+      <div className="bg-lightgreen shadow-custom rounded-xl flex flex-col text-xl mt-20 w-full text-center">
+        <h1 className="text-4xl text p-5 font-bold">Text Document</h1>
         <div className="flex justify-center">
           <Tabs
             value={value}
@@ -132,6 +132,8 @@ function Home() {
                   fontWeight: "bold",
                   backgroundColor: "#ffffffff",
                   padding: "15px",
+                  border: "2px solid green",
+                  borderRadius: "8px 0px 0px 8px",
                 },
                 "&:hover": {
                   backgroundColor: "#e0f9e2ff",
@@ -146,6 +148,8 @@ function Home() {
                   fontWeight: "bold",
                   backgroundColor: "#ffffffff",
                   padding: "15px",
+                  border: "2px solid green",
+                  borderRadius: "0px 8px 8px 0px",
                 },
                 "&:hover": {
                   backgroundColor: "#e0f9e2ff",
@@ -188,7 +192,7 @@ function Home() {
             <Link
               to="/Results"
               state={{ fileText }}
-              className="bg-darkgreen text-[36px] rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
+              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
             >
               Translate
             </Link>
@@ -198,9 +202,7 @@ function Home() {
         {value === 1 && (
           <div className="flex flex-col flex-1 gap-1 h-full w-full">
             <div className="flex flex-col flex-1 m-10">
-              <p className="text-left pb-2 pt-4">
-                Write your medical notes
-              </p>
+              <p className="text-left pb-2 pt-4">Write your medical notes</p>
               <textarea
                 value={userInput}
                 onChange={handleUserInput}
@@ -210,7 +212,7 @@ function Home() {
             <Link
               to="/Results"
               state={{ userInput }}
-              className="bg-darkgreen text-[36px] rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
+              className="bg-darkgreen text-4xl rounded-b-lg p-2 text-white hover:cursor-pointer text-center"
             >
               Translate
             </Link>
