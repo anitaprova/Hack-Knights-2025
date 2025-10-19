@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Logo from "../assets/logo.svg";
-import LoginImage from "../assets/confusedfrog-image.png";
 import { supabase } from "../../utils/supabaseClient";
 import ConfusedFrog from "../assets/confusedfrog-image.png";
 import * as React from "react";
