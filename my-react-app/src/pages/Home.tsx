@@ -32,13 +32,13 @@ function Home() {
     let prompt = "";
     let original_text = "";
     if (inputType === "transcript") {
-      prompt = `You are helping in an application that translates medical speech to plain english. You are given a transcript of what the doctor has said to a patient. Return only your response. Translate the following: ${transcript}`;
+      prompt = `You are helping in an application that translates medical speech to plain english. You are given a transcript of what the doctor has said to a patient. Return only your response. Make the prompt on the shorter side. Translate the following: ${transcript}`;
       original_text = transcript;
     } else if (inputType === "userInput") {
-      prompt = `You are helping in an application that translates medical speech to plain english. You are given the notes the doctor has given to the patient. Return only your response. Translate the following: ${userInput}`;
+      prompt = `You are helping in an application that translates medical speech to plain english. You are given the notes the doctor has given to the patient. Return only your response. Make the prompt on the shorter side. Translate the following: ${userInput}`;
       original_text = userInput;
     } else if (inputType === "file") {
-      prompt = `You are helping in an application that translates medical speech to plain english. You are given the text from a file that the doctor gave to the patient. Return only your response. Translate the following: ${fileText}`;
+      prompt = `You are helping in an application that translates medical speech to plain english. You are given the text from a file that the doctor gave to the patient. Return only your response. Make the prompt on the shorter side. Translate the following: ${fileText}`;
       original_text = fileText;
     } else {
       console.log("No passed prompt");
@@ -110,7 +110,7 @@ function Home() {
       return;
     }
     
-    const recordName = files[0]?.name || `${type}-record-${Date.now()}`;
+    const recordName = file?.name || `${type}-record-${Date.now()}`;
     
     const { data, error } = await supabase
       .from('records')

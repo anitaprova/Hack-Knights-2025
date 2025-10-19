@@ -104,7 +104,7 @@ function Login() {
             <span>Login with Google</span>
           </button>
         </section>
-        <p className="flex justify-center gap-2 mt-30 text-gray-500">
+        <p className="flex justify-center gap-2 mt-20 text-gray-500">
           Not a member?
           <a
             href="/Signup"
