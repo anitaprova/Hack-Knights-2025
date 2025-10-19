@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { HiMiniSpeakerWave } from "react-icons/hi2";
 
 export function VoiceButton({ text }: { text: string }) {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -78,8 +79,13 @@ export function VoiceButton({ text }: { text: string }) {
   }, []);
 
   return (
-    <button onClick={speak} disabled={isGenerating}>
-      {isGenerating ? "Generating..." : "Speak"}
+    <button 
+    onClick={speak} 
+    disabled={isGenerating}
+    className="py-1 px-2 bg-blue/[0.5] mb-1 rounded-md flex gap-2 items-center hover:cursor-pointer hover:bg-blue hover:text-white"
+    >
+      <HiMiniSpeakerWave size={20} />
+      {isGenerating ? "Generating..." : "Read aloud"}
     </button>
   );
 }
